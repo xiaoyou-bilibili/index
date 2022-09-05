@@ -1,0 +1,12 @@
+{
+    "type":"page",
+    "data": {
+        "name": "测试",
+        "content": "# title\n markdown **text**",
+        "tags": ["测试", "测试2"]
+    },
+    "body":[
+        { "className": "post-content","type": "index-markdown", "content": "${content}" },
+        { "type": "each", "name": "tags", "items": {"type": "tag", "label": "${item}", "color": "processing"}}
+    ]
+}

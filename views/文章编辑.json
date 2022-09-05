@@ -1,0 +1,30 @@
+{
+    "type":"page",
+    "data": {
+        "id": 10,
+        "content": "2222",
+        "name": "测试文章222",
+        "tags": "标签1, 标签2"
+    },
+    "body":[{
+        "type": "grid",
+        "columns": [
+            {"md": 0,"body": [
+                {"type": "input-text", "name": "title", "value": "${name}","showCounter": true, "placeholder": "文章标题"},
+                {"type":"index-markdown-editor", "name": "editor", "content": "${content}", "upload": "https://index.xiaoyou.host/app/article/img"}
+            ]}, 
+            {"md": 2,"body": [
+                {"type": "button", "visibleOn": "${id === 0}", "icon": "fa fa-paper-plane", "className": "m-xs", "label": "发布", "level": "success",
+                    "onEvent":{"click":{"actions":[{"actionType": "index-request", "args": {"method": "post","url": "/app/article/article", "data": {"tags": "${tags}","name": "${title}","content": "${editor}"}}}]}}
+                },
+                {"type": "button", "visibleOn": "${id !== 0}", "icon": "fa fa-refresh", "className": "m-xs", "label": "更新", "level": "info",
+                    "onEvent":{"click":{"actions":[{"actionType": "index-request", "args": {"method": "put","url": "/app/article/article/${id}", "data": { "tags": "${tags}","name": "${title}","content": "${editor}"}}}]}}
+                },
+                {"type": "button", "icon": "fa fa-trash", "className": "m-xs", "label": "删除", "level": "danger",
+                    "onEvent":{"click":{"actions":[{"actionType": "index-request", "args": {"method": "delete","url": "/app/article/article/${id}", "data": ""}}]}}
+                },
+                { "type": "input-tag", "name": "tags", "placeholder": "输入文章标签"}
+            ]}
+        ]
+}]
+}

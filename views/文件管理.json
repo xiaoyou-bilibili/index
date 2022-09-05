@@ -1,0 +1,84 @@
+{
+  "type": "page",
+  "data": {
+      "host":"http://index.xiaoyou.host",
+      "upload-url": "http://index.xiaoyou.host/data/object"
+  },
+  "body": [
+    {
+      "type": "crud",
+      "api": "${host}/app/file?search_type=${search_type || 'name'}&search_keyword=${search_keyword}&size=${perPage}&current=${page}",
+      "syncLocation": false,
+      "source": "list",
+      "filter": {
+        "title": "条件查询",
+        "body": [
+          {
+            "type": "flex",
+            "justify": "flex-start",
+            "alignItems": "flex-start",
+            "items": [
+              {
+                "label": "选项",
+                "type": "select",
+                "name": "search_type",
+                "options": [
+                  {
+                    "label": "名字",
+                    "value": "name"
+                  },
+                  {
+                    "label": "文件类型",
+                    "value": "file_type"
+                  }
+                ]
+              },
+              {
+                "label": "关键词",
+                "type": "input-text",
+                "name": "search_keyword",
+                "placeholder": "请输入关键词"
+              }
+            ]
+          }
+        ]
+      },
+      "headerToolbar": [
+        "bulkActions"
+      ],
+      "bulkActions": [
+        {
+          "label": "批量删除",
+          "icon": "fa fa-trash",
+          "level": "danger",
+          "actionType": "ajax",
+          "api": "delete:${host}/app/file/${ids|raw}",
+          "confirmText": "确定要批量删除?"
+        }
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "label": "ID"
+        },
+        {
+          "name": "preview",
+          "label": "图标",
+          "quickEdit": {
+            "mode": "inline",
+            "type": "html",
+            "html": "<img style=\"width: 50px;border-radius: 5px;\"  src=\"${preview}\"/>"
+          }
+        },
+        {
+          "name": "name",
+          "label": "名称"
+        },
+        {
+          "name": "create_time",
+          "label": "创建时间"
+        }
+      ]
+    }
+  ]
+}

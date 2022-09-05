@@ -1,0 +1,241 @@
+{
+  "type": "page",
+  "data": {
+      "host":"http://index.xiaoyou.host",
+      "upload-url": "http://index.xiaoyou.host/data/object"
+  },
+  "body": [
+    {
+      "type": "crud",
+      "api": "${host}/app/music?search_type=${search_type || 'name'}&search_keyword=${search_keyword}&size=${perPage}&current=${page}",
+      "syncLocation": false,
+      "source": "list",
+      "filter": {
+        "title": "条件查询",
+        "body": [
+          {
+            "type": "flex",
+            "justify": "flex-start",
+            "alignItems": "flex-start",
+            "items": [
+              {
+                "label": "选项",
+                "type": "select",
+                "name": "search_type",
+                "options": [
+                  {
+                    "label": "名字",
+                    "value": "name"
+                  },
+                  {
+                    "label": "歌手",
+                    "value": "singer"
+                  }
+                ]
+              },
+              {
+                "label": "关键词",
+                "type": "input-text",
+                "name": "search_keyword",
+                "placeholder": "请输入关键词"
+              }
+            ]
+          }
+        ]
+      },
+      "headerToolbar": [
+        {
+          "type": "button",
+          "label": "新增音乐",
+          "level": "primary",
+          "icon": "fa fa-music",
+          "actionType": "dialog",
+          "dialog": {
+            "title": "新增音乐",
+            "body": {
+              "type": "form",
+              "api": "post:${host}/app/music",
+              "body": [
+                {
+                  "type": "input-text",
+                  "name": "name",
+                  "label": "名字"
+                },
+                {
+                  "type": "input-text",
+                  "name": "singer",
+                  "label": "歌手"
+                },
+                {
+                  "type": "input-file",
+                  "name": "pic",
+                  "label": "封面",
+                  "accept": "*",
+                  "receiver": "${upload-url}",
+                  "urlField": "object_id",
+                  "valueField": "object_id"
+                },
+                {
+                  "type": "input-file",
+                  "name": "audio",
+                  "label": "音频",
+                  "accept": "*",
+                  "receiver": "${upload-url}",
+                  "urlField": "object_id",
+                  "valueField": "object_id"
+                },
+                {
+                  "type": "input-file",
+                  "name": "lrc",
+                  "label": "歌词",
+                  "accept": "*",
+                  "receiver": "${upload-url}",
+                  "urlField": "object_id",
+                  "valueField": "object_id"
+                }
+              ]
+            }
+          }
+        },
+        "bulkActions"
+      ],
+      "bulkActions": [
+        {
+          "label": "添加到歌单",
+          "level": "success",
+          "icon": "fa fa-plus",
+          "actionType": "dialog",
+          "dialog": {
+            "title": "提示",
+            "actions": [
+              {
+                "label": "提交",
+                "primary": true,
+                "type": "button",
+                "close": true,
+                "onEvent": {
+                  "click": {
+                    "actions": [
+                      {
+                        "actionType": "index-request",
+                        "args": {
+                          "url": "${host}/app/music/album",
+                          "method": "post",
+                          "numberField": [
+                            "album_id"
+                          ],
+                          "numberListField": [
+                            "music_id"
+                          ],
+                          "data": {
+                            "music_id": "${ids|raw}",
+                            "album_id": "${album_id}"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ],
+            "body": {
+              "type": "form",
+              "body": [
+                {
+                  "type": "input-text",
+                  "name": "album_id",
+                  "required": true,
+                  "placeholder": "请输入专辑ID",
+                  "label": "专辑ID"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label": "从歌单中删除",
+          "icon": "fa fa-chain-broken",
+          "level": "warning",
+          "actionType": "dialog",
+          "dialog": {
+            "title": "提示",
+            "actions": [
+              {
+                "label": "提交",
+                "primary": true,
+                "type": "button",
+                "close": true,
+                "onEvent": {
+                  "click": {
+                    "actions": [
+                      {
+                        "actionType": "index-request",
+                        "args": {
+                          "url": "${host}/app/music/album",
+                          "method": "post",
+                          "numberField": [
+                            "album_id"
+                          ],
+                          "numberListField": [
+                            "music_id"
+                          ],
+                          "data": {
+                            "music_id": "${ids|raw}",
+                            "album_id": "${album_id}"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ],
+            "body": {
+              "type": "form",
+              "body": [
+                {
+                  "type": "input-text",
+                  "name": "album_id",
+                  "required": true,
+                  "placeholder": "请输入专辑ID",
+                  "label": "专辑ID"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label": "批量删除",
+          "icon": "fa fa-trash",
+          "level": "danger",
+          "actionType": "ajax",
+          "api": "delete:${host}/app/music/${ids|raw}",
+          "confirmText": "确定要批量删除?"
+        }
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "label": "ID"
+        },
+        {
+          "name": "pic",
+          "label": "封面",
+          "quickEdit": {
+            "mode": "inline",
+            "type": "html",
+            "html": "<img style=\"width: 50px;border-radius: 5px;\"  src=\"${pic}\"/>"
+          }
+        },
+        {
+          "name": "name",
+          "label": "名称"
+        },
+        {
+          "name": "singer",
+          "label": "歌手"
+        }
+      ]
+    }
+  ]
+}

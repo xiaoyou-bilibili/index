@@ -11,5 +11,5 @@ index-一款可扩展的资源管理服务
 - music-front 音乐播放器
 - relation 关系服务
 - search 搜索服务
-
-
+- views 所有界面的json
+- plugins 所有插件代码
