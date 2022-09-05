@@ -1,0 +1,36 @@
+// 定义我们接口的版本
+syntax = "proto3";
+// 定义包名称
+package api;
+// 定义go安装包名称
+option go_package = "index.app/api;app";
+// 定义我们的服务
+service App {
+  // 删除某个节点
+  rpc DeleteNode (NoeMeta) returns (DeleteNodeResp);
+  // 获取节点的原信息(用于前端界面展示)
+  rpc GetNodeInfo (GetNodeInfoReq) returns (GetNodeInfoResp);
+}
+
+// 对象元信息
+message NoeMeta {
+  int64 id = 1; // 节点ID
+}
+// 删除响应事件
+message DeleteNodeResp {
+  bool id = 1; // 对象ID
+}
+
+message GetNodeInfoReq {
+  repeated CardInfo infos = 1; // 对象ID和所属应用
+}
+// 获取节点信息
+message GetNodeInfoResp {
+  repeated CardInfo  cards = 1; // 卡片信息列表
+}
+//  卡片信息
+message CardInfo {
+  int64 NodeId = 1; // 节点ID
+  string App = 2; // 卡片所属应用
+  string Info = 3; // 卡片信息
+}

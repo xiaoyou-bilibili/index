@@ -1,0 +1,63 @@
+.search-box>div {
+    width: 100%;
+    flex-wrap: nowrap;
+    border-bottom: 1px dashed black;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.search-box {
+    overflow-x: hidden;
+}
+.div-max {
+    width: 100%
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* 滚动槽 */
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+    border-radius: inherit;
+    background-color: rgba(144, 147, 153, 0.3);
+    -webkit-transition: 0.3s background-color;
+    transition: 0.3s background-color;
+}
+.cxd-Image {
+    border: 0!important;
+}
+
+/*top提示不遮挡*/
+.cxd-TooltipWrapper {
+    display: inline-block;
+}
+
+/*文章样式*/
+pre{overflow-x:auto}
+/*图片*/
+.post-content img{max-width:100%;border-radius: 5px}
+.post-content label{display:inline-block;max-width:100%;margin-bottom:5px;font-weight:700}
+.post-content h2{border-bottom:1px solid #bbb;padding-bottom:.3em;font-size:2em;font-weight:600;line-height:1.1;color:inherit;margin:.67em 0}
+.post-content h3{font-size:24px}
+.post-content h1,h2,h3,h4,h5,h6{font-family:inherit;font-weight:500;line-height:1.1;color:inherit}
+.post-content h1,h2,h3{margin-top:20px}
+.post-content a:hover{border-bottom:1px solid #0366d6!important}
+.post-content a{outline:0;background-color:transparent;text-decoration:none;color:#51aded}
+.post-content {line-height:24px;font-size:16px;color:#24292e;padding:0 24px}
+.post-content img{border-radius:5px;padding:0;box-sizing:content-box;background-color:#fff;max-width:100%;vertical-align:middle;display:block}
+/*代码部分*/
+.post-content code{font-size:13px;margin:0 3px;border-radius:3px;font-family:Menlo,Bitstream Vera Sans Mono,DejaVu Sans Mono,Monaco,Consolas,monospace}
+/*表格样式*/
+.post-content table{border-collapse:collapse;margin:0 auto;text-align:center}
+.post-content table td,table th{border:1px solid #cad9ea;color:#666;height:30px}
+.post-content table thead th{background-color:#cce8eb;width:100px}
+.post-content table tr:nth-child(odd){background:#fff}
+.post-content table tr:nth-child(even){background:#f5fafa}
+.post-content thead td{background-color:#cce8eb;width:100px}
+/*引用*/
+.post-content blockquote{background:#f1f1f1;margin:1.4em 0;color:#646464;font-weight:400;letter-spacing:.01rem;border-left:3px solid #d3d3d3;padding:10px 20px;font-size:16px}

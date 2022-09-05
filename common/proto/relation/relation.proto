@@ -1,0 +1,103 @@
+// 定义我们接口的版本
+syntax = "proto3";
+// 定义包名称
+package api;
+// 定义go安装包名称
+option go_package = "index.relation/api;relation";
+// 定义我们的服务
+service Relation {
+  // 添加节点
+  rpc AddNode (NodeInfo) returns (NodeMeta);
+  // 删除节点
+  rpc DeleteNode (NodeMeta) returns (UpdateResp);
+  // 更新节点
+  rpc UpdateNode (Node) returns (UpdateResp);
+  // 查找节点
+  rpc GetNode (NodeMeta) returns (Node);
+  // 查找某个节点下所有的内容
+  rpc GetNodeChild (GetNodeChildReq) returns (GetNodeChildResp);
+  // 模糊查找节点
+  rpc FindNode(FindNodeReq) returns (FindNodeResp);
+  // 查找某个节点的所有父节点
+  rpc GetNodeParent (GetNodeChildReq) returns (GetNodeChildResp);
+
+
+  // 添加联系
+  rpc AddRelation (RelationInfo) returns (NodeMeta);
+  // 删除联系
+  rpc DeleteRelation (NodeMeta) returns (UpdateResp);
+  // 根据开始和结束节点ID来删除联系
+  rpc DeleteRelationWithNode(DeleteNodeWithRelationReq) returns (UpdateResp);
+  // 更新联系
+  rpc UpdateRelation (UpdateRelationReq) returns (UpdateResp);
+  // 查找联系
+  rpc GetRelation (NodeMeta) returns (RelationInfo);
+}
+// 删除响应
+message UpdateResp {
+  bool status = 1;  // 状态
+  string msg =2; // 消息提示
+}
+// 添加节点响应
+message NodeMeta {
+  repeated int64 id = 1;   // 节点或联系ID
+  string msg = 2; // 消息提示
+}
+// 对象信息
+message NodeInfo {
+  repeated string node_label = 1;   // 节点标签
+  map<string,string> attribute =2; // 节点属性
+}
+// 联系信息
+message RelationInfo {
+  int64 start = 1;                  // 起点
+  int64 end = 2;                    // 终点
+  string relation = 3;              // 节点关系
+  map<string,string> attribute = 4; // 节点属性
+}
+
+// 更新联系信息
+message UpdateRelationReq {
+  int64 id = 1; // 联系id
+  RelationInfo info =2; // 联系信息
+}
+// 根据开始和结束节点删除ID
+message DeleteNodeWithRelationReq {
+  int64 start = 1;  // 开始ID
+  int64 end = 2;    // 结束ID
+}
+
+message GetNodeChildReq {
+  int64 id = 1;       // 节点ID
+  string relation=2;  // 过滤联系的类型
+  int32 current=3;    // 当前第几页
+  int32 size=4;       // 每页数量
+}
+
+// 查找某个节点下所有的内容
+message GetNodeChildResp {
+  repeated Node nodes = 1;  // 所有的子节点
+  NodeInfo info = 2;        // 当前节点信息
+  int64 total=3;            // 总数据条数
+}
+
+// 节点
+message Node {
+  int64 id = 1; // 节点id
+  NodeInfo info = 2; // 节点信息
+}
+
+// 模糊查找节点请求
+message FindNodeReq {
+  string nodeLabel = 1; // 节点标签
+  string field = 2; // 待查找的字段
+  string keyword = 3; // 查找的关键词
+  int32 current=4;    // 当前第几页
+  int32 size=5;       // 每页数量
+}
+
+// 模糊查找节点返回结果
+message FindNodeResp {
+  repeated Node nodeList = 1; // 查找到的节点
+  int64 total=2;            // 总数据条数
+}

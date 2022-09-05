@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"baseUrl": "./",
+		"paths": {
+			"@/*": ["src/*"],
+			"_v/*": ["src/views/*"],
+			"_c/*": ["src/components/*"],
+			"_a/*": ["src/assets/*"],
+			"_r": ["src/request/*"],
+			"_public": ["public/*"]
+		}
+	},
+	"exclude": ["node_modules", "dist"]
+}

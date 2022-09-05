@@ -1,0 +1,50 @@
+{
+  "name": "index-desktop-amis",
+  "productName": "index",
+  "private": true,
+  "version": "2.0.0",
+  "description": "Vite React Electron boilerplate.",
+  "main": "dist/electron/main/index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build && electron-builder"
+  },
+  "engines": {
+    "node": "^14.18.0 || >=16.0.0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.2",
+    "@fortawesome/free-brands-svg-icons": "^6.1.2",
+    "@fortawesome/free-regular-svg-icons": "^6.1.2",
+    "@fortawesome/free-solid-svg-icons": "^6.1.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "amis": "^2.1.1-beta.2",
+    "antd": "^4.22.6",
+    "axios": "^0.27.2",
+    "dplayer": "^1.27.0",
+    "aplayer": "^1.10.1",
+    "react-router-dom": "^6.3.0",
+    "highlight.js": "^11.6.0",
+    "marked": "^4.0.19"
+  },
+  "devDependencies": {
+    "@types/dplayer": "^1.25.2",
+    "@types/marked": "^4.0.6",
+    "@types/node": "^18.7.9",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@vitejs/plugin-react": "^2.0.1",
+    "electron": "^20.0.2",
+    "electron-builder": "^23.3.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^4.7.4",
+    "vite": "^3.0.7",
+    "vite-plugin-electron": "^0.9.0",
+    "vditor": "^3.8.17"
+  },
+  "env": {
+    "VITE_DEV_SERVER_HOST": "127.0.0.1",
+    "VITE_DEV_SERVER_PORT": 7777
+  }
+}

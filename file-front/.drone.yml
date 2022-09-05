@@ -1,0 +1,25 @@
+kind: pipeline
+type: docker
+name: build
+steps:
+  - name: build # 构建阶段
+    image: node:16.13.0
+    pull: if-not-exists # 镜像拉取策略
+    commands: # 下面这里是我们执行的命令
+      - yarn install # 安装依赖
+      - yarn run build # 构建应用
+  - name: push # 自动推送到私有仓库update
+    image: plugins/docker
+    pull: if-not-exists # 镜像拉取策略
+    settings:
+      registry: registry.xiaoyou66.com # 私有仓库地址
+      repo: registry.xiaoyou66.com/index/web-file # 仓库全称
+      use_cache: true
+      username: admin # 设置私有仓库的账号密码
+      password: xiaoyou
+      tags: # 设置我们的标签
+        - latest
+        - 0.0.3
+#trigger: # 这里设置使用master分支来触发
+#  branch:
+#    - master

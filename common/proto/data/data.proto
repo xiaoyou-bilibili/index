@@ -1,0 +1,91 @@
+// 定义我们接口的版本
+syntax = "proto3";
+// 定义包名称
+package api;
+// 定义go安装包名称
+option go_package = "index.data/api;data";
+// 定义我们的服务
+service Data {
+  // 获取对象(流式传输)
+  rpc GetObject (ObjectMeta) returns (stream ObjectInfo);
+  // 上传对象(使用流式传输)
+  rpc PutObject (stream ObjectPutInfo) returns (ObjectMeta);
+  // 删除对象
+  rpc DeleteObject (ObjectMeta) returns (UpdateObjectResp);
+  // 获取文本
+  rpc GetText (ObjectMeta) returns (getTextResp);
+  // 更新文本
+  rpc UpdateText (UpdateTextInfo)  returns (UpdateObjectResp);
+  // 上传文本
+  rpc AddText (TextInfo) returns (ObjectMeta);
+  // 分片上传文件
+  rpc putObjectChunk(PutObjectChunkReq) returns (PutObjectChunkResp);
+  // 获取对象的下载链接
+  rpc getObjectDownloadLink(ObjectMeta) returns (GetObjectDownloadLinkResp);
+}
+
+// 对象元信息
+message ObjectMeta {
+  repeated string id = 1; // 对象ID
+  string msg = 2;       // 额外信息
+}
+
+// 上传对象的信息
+message ObjectPutInfo {
+  string filename = 1;  // 文件名称
+  int64 offset = 3;     // 偏移量
+  int64 size = 4;       // 文件大小
+  bytes data = 5;       // 流式上传的内容
+}
+
+// 获取对象的信息
+message ObjectInfo {
+  ObjectPutInfo info = 1;
+  string content_type = 2;  // 文件类型
+}
+
+// 删除对象返回结果
+message UpdateObjectResp {
+  bool status = 1;  // 是否操作成功
+  string msg = 2;  // 额外信息
+}
+
+// 获取文本对象返回
+message getTextResp {
+  map<string, TextInfo> list = 1; // 返回结果列表
+}
+
+// 文本信息
+message TextInfo {
+  string name = 1;    // 文本名字
+  string content = 2; // 文本内容
+}
+
+// 更新文件信息
+message UpdateTextInfo {
+  string id = 1;      // 资源ID
+  TextInfo info = 2;    // 文本信息
+}
+
+// 分片上传文件
+message PutObjectChunkReq {
+  int32 totalChunk = 1;    // 总分片数
+  int32 current = 2;      // 当前为第几个分片（从1开始）
+  int64 totalSize = 3;    // 总文件大小
+  int64 size = 4;         // 当前分片数据的大小
+  string md5 = 5;         // 文件MD5值
+  string name = 6 ;       // 文件名字
+  bytes data = 7;         // 分片数据
+}
+// 分片上传文件返回
+message PutObjectChunkResp {
+  int64 receive = 1;    // 当前总计接收了多少文件
+  bool status = 2;      // 当前接收状态是否正常
+  string msg = 3;       // 错误信息
+  string id = 4;        // 传输完成的后对象ID
+}
+
+// 获取文件的下载链接
+message GetObjectDownloadLinkResp {
+  map<string, string> links = 1; // 下载链接
+}
